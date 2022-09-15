@@ -1,10 +1,12 @@
 <template>
-  <div class="todo">
-    <input ref="editor" class="edit" @keyup.enter="editEnd" v-model="editText" v-if="edit">
-    <div v-else class="todo__item">{{ title }}</div>
-    <div>
-      <font-awesome-icon @click="editStart" class='tools' icon="fa-pen-to-square"/>
-      <font-awesome-icon @click="$emit('todoCompleted',id)" class='tools' icon="fa-check"/>
+  <div class="d-flex justify-content-between align-items-center my-3 rounded px-3 py-2 border border-primary">
+    <b-form-input ref="editor" class="w-50 h-50" @keyup.enter="editEnd" v-if="edit" v-model="editText" placeholder="Введите название дела"></b-form-input>
+    <div  v-else class="todo__item">{{ title }}</div>
+    <div class="d-flex align-items-center justify-content-around">
+      <font-awesome-icon @click="editStart" class='cursor text-primary mx-2 my-1 cursor-pointer' icon="fa-pen-to-square"/>
+      <font-awesome-icon v-if="completed" @click="$emit('todoCompleted',id)" class='cursor text-primary mx-2 my-1' icon="fa-check"/>
+      <font-awesome-icon v-else @click="$emit('todoCompleted',id)" class='cursor text-primary mx-2 my-1' icon="fa-xmark"/>
+      <font-awesome-icon @click="$emit('todoRemove',id)" class='cursor text-primary mx-2 my-1' icon="fa-regular fa-trash-can"/>
     </div>
   </div>
 </template>
@@ -15,21 +17,20 @@ export default {
   props: {
     title: String,
     id: Number,
+    completed:Boolean,
   },
   methods: {
-    editStart() {
+    editStart(){
       this.edit = !this.edit
-
     },
     editEnd() {
       this.$emit('todoEdit', [this.editText, this.id])
       this.edit = !this.edit
     },
   },
-  emits: ['todoCompleted', 'todoEdit'],
+  emits: ['todoCompleted', 'todoEdit','todoRemove'],
   data() {
     return {
-      completed: false,
       edit: false,
       editText: this.title,
     }
@@ -39,47 +40,15 @@ export default {
       this.$refs.editor.focus()
     }
   },
-  watch: {
-    completed() {
-      if (this.completed) {
-        this.$emit('todoCompleted', this.id)
-      }
-    },
-  }
 }
 </script>
 
 <style>
-.tools {
-  margin: 6px;
+.cursor{
   cursor: pointer;
-  color: gray;
+  height: 17px;
 }
-
-.tools:hover {
-  color: black;
-  transform: scale(1.04);
+.cursor:hover{
+  transform: scale(1.1);
 }
-
-.todo {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  border-radius: 12px;
-  justify-content: space-between;
-  margin: 10px auto;
-  width: 600px;
-  height: 50px;
-  padding: 5px 10px;
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.edit {
-  padding: 4px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-}
-
-
 </style>
