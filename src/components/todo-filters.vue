@@ -1,5 +1,5 @@
 <template>
-  <b-form-select v-model="selected" :options="option" class="w-auto mx-0"></b-form-select>
+  <b-form-select  v-model="selected" :options="option" class="w-25"></b-form-select>
 </template>
 
 <script>

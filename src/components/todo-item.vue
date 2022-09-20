@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-between align-items-center my-3 rounded px-3 py-2 border border-primary">
     <b-form-input ref="editor" class="w-50 h-50" @keyup.enter="editEnd" v-if="edit" v-model="editText" placeholder="Введите название дела"></b-form-input>
-    <div  v-else class="todo__item">{{ title }}</div>
+    <div  v-else :class="{'text-decoration-line-through':completed}">{{ title }}</div>
     <div class="d-flex align-items-center justify-content-around">
       <font-awesome-icon @click="editStart" class='cursor text-primary mx-2 my-1 cursor-pointer' icon="fa-pen-to-square"/>
       <font-awesome-icon v-if="completed" @click="$emit('todoCompleted',id)" class='cursor text-primary mx-2 my-1' icon="fa-check"/>

@@ -1,7 +1,7 @@
 <template>
-  <div draggable="true" class="d-flex align-items-center">
-    <b-form-input class="my-2" @keyup.enter="addTodo" v-model="title" placeholder="Введите название дела"/>
-    <b-button @click="addTodo" class="mx-3" variant="outline-primary">Добавить</b-button>
+  <div draggable="true" class="d-flex align-items-center justify-content-between">
+    <b-form-input class="w-75 my-2" @keyup.enter="addTodo" v-model="title" placeholder="Введите название дела"/>
+    <b-button @click="addTodo" variant="outline-primary">Добавить</b-button>
   </div>
 </template>
 
